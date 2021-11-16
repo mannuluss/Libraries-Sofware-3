@@ -2,27 +2,27 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
 interface library {
-    titulo: string, ISBN: string, autor: string, reseña: string, valor: string;
+    titulo: string, isbn: string, autor: string, reseña: string, valor: string;
     unidades: number;
 }
 const InitialStateLibrary:library = {
-    titulo: "", ISBN: "", autor: "", reseña: "", valor: "",
+    titulo: "", isbn: "", autor: "", reseña: "", valor: "",
     unidades: 0
 }
 export default function ListaLibros() {
     const [libros, setlibros] = useState<library[]>([]);
     const [libraryData, setlibraryData] = useState(InitialStateLibrary);
     useEffect(() => {
-        axios.get("http://localhost:8081/api/getlibros").then((res) => {
+        axios.get("/api/getlibros").then((res) => {
             setlibros(res.data);
         })
     }, [])
 
     function EnviarDatos() {
-        axios.post(`http://localhost:8081/api/agregarlibro?titulo=${libraryData.titulo}&ISBN=${libraryData.ISBN}&autor=${libraryData.autor}&resena=${libraryData.reseña}&valor=${libraryData.valor}&unidades=${libraryData.unidades}`)
+        axios.post(`/api/agregarlibro?titulo=${libraryData.titulo}&ISBN=${libraryData.isbn}&autor=${libraryData.autor}&resena=${libraryData.reseña}&valor=${libraryData.valor}&unidades=${libraryData.unidades}`)
             .then((res) => {
                 var datoslibros = JSON.parse(JSON.stringify(libros));
-                var index = datoslibros.findIndex((e: any) => e.ISBN == libraryData.ISBN);
+                var index = datoslibros.findIndex((e: library) => e.isbn == libraryData.isbn);
                 if (index == -1) {
                     datoslibros.push(libraryData);
                     alert("nuevo libro agregada");
@@ -37,7 +37,7 @@ export default function ListaLibros() {
         setlibraryData(libro);
     }
     function deleteitem(libro: library) {
-        axios.delete(`http://localhost:8081/api/deletelibro?ISBN=${libro.ISBN}`).then(res => {
+        axios.delete(`/api/deletelibro?ISBN=${libro.isbn}`).then(res => {
             setlibros(libros.filter(e => e != libro))
         })
     }
@@ -56,7 +56,7 @@ export default function ListaLibros() {
                             <h3>{libro.titulo}</h3>
                             <div className="name-container">
                                 <p>{libro.autor}</p>
-                                <p>ISBN:{libro.ISBN}</p>
+                                <p>ISBN:{libro.isbn}</p>
                             </div>
                         </div>
                         <div className="valor">
@@ -78,34 +78,34 @@ export default function ListaLibros() {
         <div className="agregar-container">
             <div>
                 <label >ISBN</label>
-                <input type="text" value={libraryData.ISBN}
-                    onChange={(evt) => { ChangesValues("ISBN", evt.target.value) }} />
+                <input type="text" value={libraryData.isbn}
+                    onChange={(evt) => { ChangesValues("isbn", evt.target.value) }} />
             </div>
             <div>
                 <label >titulo</label>
                 <input type="text" value={libraryData.titulo}
-                    onChange={(evt) => { ChangesValues("Titulo", evt.target.value) }} />
+                    onChange={(evt) => { ChangesValues("titulo", evt.target.value) }} />
             </div>
             <div>
                 <label >Autor</label>
                 <input type="text" value={libraryData.autor}
-                    onChange={(evt) => { ChangesValues("Autor", evt.target.value) }} />
+                    onChange={(evt) => { ChangesValues("autor", evt.target.value) }} />
             </div>
             <div>
                 <label >Reseña</label>
                 <input type="text" value={libraryData.reseña}
-                    onChange={(evt) => { ChangesValues("Reseña", evt.target.value) }} />
+                    onChange={(evt) => { ChangesValues("reseña", evt.target.value) }} />
 
             </div>
             <div>
                 <label >Valor</label>
                 <input type="number" value={libraryData.valor}
-                    onChange={(evt) => { ChangesValues("Valor", evt.target.value) }} />
+                    onChange={(evt) => { ChangesValues("valor", evt.target.value) }} />
             </div>
             <div>
                 <label >Unidades</label>
                 <input type="number" value={libraryData.unidades}
-                    onChange={(evt) => { ChangesValues("Unidades", evt.target.value) }} />
+                    onChange={(evt) => { ChangesValues("unidades", evt.target.value) }} />
             </div>
             <button onClick={() => EnviarDatos()}>Enviar</button>
         </div>

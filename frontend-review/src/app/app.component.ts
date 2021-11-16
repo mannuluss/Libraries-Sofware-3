@@ -15,18 +15,7 @@ interface listaReview {
 
 export class AppComponent {
   title = 'frontend-review';
-  lista: listaReview[] = [
-    {
-      isbn: "000001222",
-      estrellas: 5,
-      comentario: "no es muy bueno, me dio cancer"
-    },
-    {
-      isbn: "758001222",
-      estrellas: 2,
-      comentario: "casi me da cancer"
-    }
-  ]
+  lista: listaReview[] = []
 
   /*
   otra manera de obtener la referencia hacia un elemento en el DOM
@@ -41,14 +30,14 @@ export class AppComponent {
 
 
   constructor(private http: HttpClient) {
-    http.get("http://localhost:3000/reviews").subscribe((res) => {
+    http.get("/reviews").subscribe((res) => {
       console.log(res);
       this.lista = res as listaReview[];
     })
   }
 
   sendreview() {
-    this.http.post(`http://localhost:3000/addreviews?isbn=${this.isbn}&estrellas=${this.stars}&comentario=${this.comentario}`, null).subscribe((res) => {
+    this.http.post(`/addreviews?isbn=${this.isbn}&estrellas=${this.stars}&comentario=${this.comentario}`, null).subscribe((res) => {
       console.log(res);
       var data = { isbn: this.isbn, comentario: this.comentario, estrellas: this.stars }
 
@@ -64,7 +53,7 @@ export class AppComponent {
     })
   }
   deleteitem(item: listaReview) {
-    this.http.delete(`http://localhost:3000/deletereviews?isbn=${item.isbn}`).subscribe((res) => {
+    this.http.delete(`/deletereviews?isbn=${item.isbn}`).subscribe((res) => {
       this.lista = this.lista.filter(e => e != item);
     })
   }
