@@ -9,6 +9,16 @@
             "mainClass": "example.libraries.LibrariesApplication",
             "projectName": "libraries",
             "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-CatalogApplication<libraries>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "example.libraries.CatalogApplication",
+            "projectName": "libraries",
+            "args": ""
         }
     ]
 }
