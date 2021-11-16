@@ -1,9 +1,8 @@
 package example.libraries;
 
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE })
 public class CatalogController {
 
-    private ArrayList<Book> libros;
+
+    private Hashtable<String, Book> books = new Hashtable<String, Book>();
 
     public CatalogController() {
     	initialize();
@@ -31,7 +32,8 @@ public class CatalogController {
 
     @GetMapping("/getlibros")
     public ResponseEntity<?> GetLibraries() {
-        return new ResponseEntity<List<Book>>(libros, HttpStatus.OK);
+    	List<Book> booksList = new ArrayList<Book>(books.values());
+        return new ResponseEntity<List<Book>>(booksList, HttpStatus.OK);
     }
 
     @PostMapping("/agregarlibro")
@@ -39,44 +41,32 @@ public class CatalogController {
             @RequestParam(value = "ISBN") String iSBN, @RequestParam(value = "autor") String autor,
             @RequestParam(value = "resena") String reseña, @RequestParam(value = "valor") String valor,
             @RequestParam(value = "unidades") Integer unidades) {
-        int number = -1;
-        for (Integer i = 0; i < libros.size(); i++) {
-            if (libros.get(i).ISBN.equals(iSBN)) {
-                number = i;
-                break;
-            }
-        }
-        Book newlibro = new Book(titulo, iSBN, autor, reseña, valor, unidades);
-        if (number != -1) {
-            libros.set(number, newlibro);
-        } else
-            libros.add(newlibro);
+    	
+    	
+    	Book newlibro = new Book(titulo, iSBN, autor, reseña, valor, unidades);
+    	books.put(iSBN, newlibro);
+    	
         return new ResponseEntity<String>(HttpStatus.OK);
     }
 
     @DeleteMapping("/deletelibro")
     public Map<String, HttpStatus> PostLibrary(@RequestParam(value = "ISBN") String iSBN) {
-        int number = -1;
-        for (Integer i = 0; i < libros.size(); i++) {
-            if (libros.get(i).ISBN.equals(iSBN)) {
-                number = i;
-                break;
-            }
-        }
-        var map = new HashMap<String, HttpStatus>();
-        if (number != -1) {
-            libros.remove(number);
+        var map = new HashMap<String, HttpStatus>();        
+        Book removedBook = books.remove(iSBN);
+        
+        if (removedBook!=null)
             map.put("code", HttpStatus.OK);
-        } else
+        else
             map.put("code", HttpStatus.BAD_REQUEST);
+    
         return map;
     }
     
     
     public void initialize() {
-        libros = new ArrayList<Book>();
-        libros.add(new Book("El milagro metabolico", "9789584276971", "Carlos Jaramillo", "En este libro, el célebre doctor Carlos Jaramillo ofrece respuestas contundentes a esas preguntas y plantea que la clave para un peso óptimo y una salud plena está en el metabolismo", "49", 10));
-        libros.add(new Book("A fuego lento", "9789584295446", "Paula Hawkins", "El descubrimiento del cuerpo de un joven asesinado brutalmente en una casa flotante de Londres desencadena sospechas sobre tres mujeres. ", "59", 20));
-        libros.add(new Book("Silence", "978958519142", "Flor M. Salvador", "La confusión se ha disipado y ya no hay nada que perturbe la relación entre Patch y Nora", "55", 15));
+    	books = new Hashtable<String, Book>();
+    	books.put("9789584276971", new Book("El milagro metabolico", "9789584276971", "Carlos Jaramillo", "En este libro, el célebre doctor Carlos Jaramillo ofrece respuestas contundentes a esas preguntas y plantea que la clave para un peso óptimo y una salud plena está en el metabolismo", "49", 10));
+    	books.put("9789584295446", new Book("A fuego lento", "9789584295446", "Paula Hawkins", "El descubrimiento del cuerpo de un joven asesinado brutalmente en una casa flotante de Londres desencadena sospechas sobre tres mujeres. ", "59", 20));
+    	books.put("9789585191426", new Book("Silence", "9789585191426", "Flor M. Salvador", "La confusión se ha disipado y ya no hay nada que perturbe la relación entre Patch y Nora", "55", 15));
     }
 }
