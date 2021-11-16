@@ -13,14 +13,13 @@ export default function ListaLibros() {
     const [libros, setlibros] = useState<library[]>([]);
     const [libraryData, setlibraryData] = useState(InitialStateLibrary);
     useEffect(() => {
-        axios.get("http://localhost:8080/api/getlibros").then((res) => {
-            console.log(res.data)
+        axios.get("http://localhost:8081/api/getlibros").then((res) => {
             setlibros(res.data);
         })
     }, [])
 
     function EnviarDatos() {
-        axios.post(`http://localhost:8080/api/agregarlibro?titulo=${libraryData.titulo}&ISBN=${libraryData.ISBN}&autor=${libraryData.autor}&resena=${libraryData.reseña}&valor=${libraryData.valor}&unidades=${libraryData.unidades}`)
+        axios.post(`http://localhost:8081/api/agregarlibro?titulo=${libraryData.titulo}&ISBN=${libraryData.ISBN}&autor=${libraryData.autor}&resena=${libraryData.reseña}&valor=${libraryData.valor}&unidades=${libraryData.unidades}`)
             .then((res) => {
                 var datoslibros = JSON.parse(JSON.stringify(libros));
                 var index = datoslibros.findIndex((e: any) => e.ISBN == libraryData.ISBN);
@@ -38,7 +37,7 @@ export default function ListaLibros() {
         setlibraryData(libro);
     }
     function deleteitem(libro: library) {
-        axios.delete(`http://localhost:8080/api/deletelibro?ISBN=${libro.ISBN}`).then(res => {
+        axios.delete(`http://localhost:8081/api/deletelibro?ISBN=${libro.ISBN}`).then(res => {
             setlibros(libros.filter(e => e != libro))
         })
     }
