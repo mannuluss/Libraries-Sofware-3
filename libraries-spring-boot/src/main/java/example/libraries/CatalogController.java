@@ -21,20 +21,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/api")
 @CrossOrigin(origins = "*", 
 methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE })
-public class restController {
+public class CatalogController {
 
-    private ArrayList<library> libros;
+    private ArrayList<Book> libros;
 
-    public restController() {
-        libros = new ArrayList<library>();
-        libros.add(new library("libro1", "000001222", "jose marquez", "aqui va le reseña de un muy buen libro por eso cuesta bastante.", "100.5", 10));
-        libros.add(new library("libro2", "758001222", "socrates", "muy filosofico, probablemente le aburra a algunos y a otros no tanto.", "20.5", 10));
-        libros.add(new library("libro3", "050001222", "jose marquez", "aqui va la reseña, [anexo1]", "50", 10));
+    public CatalogController() {
+    	initialize();
     }
 
     @GetMapping("/getlibros")
     public ResponseEntity<?> GetLibraries() {
-        return new ResponseEntity<List<library>>(libros, HttpStatus.OK);
+        return new ResponseEntity<List<Book>>(libros, HttpStatus.OK);
     }
 
     @PostMapping("/agregarlibro")
@@ -49,7 +46,7 @@ public class restController {
                 break;
             }
         }
-        library newlibro = new library(titulo, iSBN, autor, reseña, valor, unidades);
+        Book newlibro = new Book(titulo, iSBN, autor, reseña, valor, unidades);
         if (number != -1) {
             libros.set(number, newlibro);
         } else
@@ -73,5 +70,13 @@ public class restController {
         } else
             map.put("code", HttpStatus.BAD_REQUEST);
         return map;
+    }
+    
+    
+    public void initialize() {
+        libros = new ArrayList<Book>();
+        libros.add(new Book("El milagro metabolico", "9789584276971", "Carlos Jaramillo", "En este libro, el célebre doctor Carlos Jaramillo ofrece respuestas contundentes a esas preguntas y plantea que la clave para un peso óptimo y una salud plena está en el metabolismo", "49", 10));
+        libros.add(new Book("A fuego lento", "9789584295446", "Paula Hawkins", "El descubrimiento del cuerpo de un joven asesinado brutalmente en una casa flotante de Londres desencadena sospechas sobre tres mujeres. ", "59", 20));
+        libros.add(new Book("Silence", "978958519142", "Flor M. Salvador", "La confusión se ha disipado y ya no hay nada que perturbe la relación entre Patch y Nora", "55", 15));
     }
 }

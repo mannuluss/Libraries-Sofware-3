@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class library {
+public class Book {
 
-    public library(String titulo, String iSBN, String autor, String reseña, String valor, Integer unidades) {
+    public Book(String titulo, String iSBN, String autor, String reseña, String valor, Integer unidades) {
         Titulo = titulo;
         ISBN = iSBN;
         Autor = autor;
