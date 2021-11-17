@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 public class Book {    
 
-    private String titulo, ISBN, autor, reseña, valor;
+    private String titulo, ISBN, autor, descripcion, valor;
     private Integer unidades;
 }
