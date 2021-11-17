@@ -2,11 +2,11 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
 interface library {
-    titulo: string, isbn: string, autor: string, reseña: string, valor: string;
+    titulo: string, isbn: string, autor: string, descripcion: string, valor: string;
     unidades: number;
 }
 const InitialStateLibrary:library = {
-    titulo: "", isbn: "", autor: "", reseña: "", valor: "",
+    titulo: "", isbn: "", autor: "", descripcion: "", valor: "",
     unidades: 0
 }
 export default function ListaLibros() {
@@ -19,7 +19,7 @@ export default function ListaLibros() {
     }, [])
 
     function EnviarDatos() {
-        axios.post(`/api/agregarlibro?titulo=${libraryData.titulo}&ISBN=${libraryData.isbn}&autor=${libraryData.autor}&resena=${libraryData.reseña}&valor=${libraryData.valor}&unidades=${libraryData.unidades}`)
+        axios.post(`/api/agregarlibro?titulo=${libraryData.titulo}&ISBN=${libraryData.isbn}&autor=${libraryData.autor}&resena=${libraryData.descripcion}&valor=${libraryData.valor}&unidades=${libraryData.unidades}`)
             .then((res) => {
                 var datoslibros = JSON.parse(JSON.stringify(libros));
                 var index = datoslibros.findIndex((e: library) => e.isbn == libraryData.isbn);
@@ -68,8 +68,8 @@ export default function ListaLibros() {
                         <button className="eliminar" onClick={() => deleteitem(libro)}>X</button>
                     </div>
                     <div className="card-content">
-                        <p>Reseña</p>
-                        {libro.reseña}
+                        <p>Descripcion</p>
+                        {libro.descripcion}
                         <button className="editar" onClick={() => { editar(libro) }}>Editar</button>
                     </div>
                 </div>);
@@ -92,8 +92,8 @@ export default function ListaLibros() {
                     onChange={(evt) => { ChangesValues("autor", evt.target.value) }} />
             </div>
             <div>
-                <label >Reseña</label>
-                <input type="text" value={libraryData.reseña}
+                <label >Descripcion</label>
+                <input type="text" value={libraryData.descripcion}
                     onChange={(evt) => { ChangesValues("reseña", evt.target.value) }} />
 
             </div>

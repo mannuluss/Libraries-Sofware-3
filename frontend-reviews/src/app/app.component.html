@@ -76,7 +76,8 @@
     color: white;
     position: absolute;
     right: 0;
-    top: 0;
+    top: -10px;
+    left: 0;
   }
 
   .editar {
@@ -109,7 +110,8 @@
 <div class="content" role="main">
   <div *ngFor="let item of lista" class="card-container">
     <div class="card-title">
-      <h3>{{item.isbn}}</h3>
+      <h3>{{item.usuario}}</h3>
+      <h4>{{item.isbn}}</h4>
       <div>
         <img [src]="'./assets/estrellas'+item.estrellas+'.png'" style="height: 50px;" />
       </div>
@@ -121,6 +123,9 @@
     <button class="editar" (click)="editar(item)">Editar</button>
   </div>
   <div class="agregar-container">
+    <label for="usuario">usuario</label>
+    <input id="usuario" #isbnbyid name="usuario" type="text" [(ngModel)]="usuario" (ngModelChange)="usuario = $event">
+
     <label for="isbn">isbn</label>
     <input id="isbn" #isbnbyid name="isbn" type="text" [(ngModel)]="isbn" (ngModelChange)="isbn = $event">
 
