@@ -1,4 +1,13 @@
 # Libraries Sofware 3
+
+## Descripción
+
+Este proyecto contiene 4 servicios
+- backend-library-catalog : Backend Catalogo de libros (Springboot)
+- backend-reviews : Backend Reviews de lectores (Node + Express)
+- frontend-library-catalog : Backend Catalogo de libros (React)
+- frontend-reviews : Frontend Reviews de lectores (Angular)
+
 ## Instrucciones de instalacion
 
 ejecutar el siguiente comando en una terminal
