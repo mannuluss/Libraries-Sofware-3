@@ -15,6 +15,7 @@ interface listaReview {
 })
 
 export class AppComponent {
+  host = "http://localhost:3000"//direccion del servidor
   title = 'frontend-review';
   lista: listaReview[] = []
 
@@ -31,14 +32,14 @@ export class AppComponent {
 
 
   constructor(private http: HttpClient) {
-    http.get("/reviews").subscribe((res) => {
+    http.get(this.host+"/reviews").subscribe((res) => {
       console.log(res);
       this.lista = res as listaReview[];
     })
   }
 
   sendreview() {
-    this.http.post(`/addreviews?usuario=${this.usuario}&isbn=${this.isbn}&estrellas=${this.stars}&comentario=${this.comentario}`, null).subscribe((res) => {
+    this.http.post(this.host+`/addreviews?usuario=${this.usuario}&isbn=${this.isbn}&estrellas=${this.stars}&comentario=${this.comentario}`, null).subscribe((res) => {
       console.log(res);
       var data = { usuario: this.usuario, isbn: this.isbn, comentario: this.comentario, estrellas: this.stars }
 
@@ -55,7 +56,7 @@ export class AppComponent {
   }
   deleteitem(item: listaReview) {
     console.log(item)
-    this.http.delete(`/deletereviews?usuario=${item.usuario}&isbn=${item.isbn}`).subscribe((res) => {
+    this.http.delete(this.host+`/deletereviews?usuario=${item.usuario}&isbn=${item.isbn}`).subscribe((res) => {
       this.lista = this.lista.filter(e => e != item);
     })
   }

@@ -1,6 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
+const host = "http://localhost:8081";//direccion del servidor
+
 interface library {
     titulo: string, isbn: string, autor: string, descripcion: string, valor: string;
     unidades: number;
@@ -13,13 +15,13 @@ export default function ListaLibros() {
     const [libros, setlibros] = useState<library[]>([]);
     const [libraryData, setlibraryData] = useState(InitialStateLibrary);
     useEffect(() => {
-        axios.get("/api/getlibros").then((res) => {
+        axios.get(host+"/api/getlibros").then((res) => {
             setlibros(res.data);
         })
     }, [])
 
     function EnviarDatos() {
-        axios.post(`/api/agregarlibro?titulo=${libraryData.titulo}&ISBN=${libraryData.isbn}&autor=${libraryData.autor}&resena=${libraryData.descripcion}&valor=${libraryData.valor}&unidades=${libraryData.unidades}`)
+        axios.post(host+`/api/agregarlibro?titulo=${libraryData.titulo}&ISBN=${libraryData.isbn}&autor=${libraryData.autor}&resena=${libraryData.descripcion}&valor=${libraryData.valor}&unidades=${libraryData.unidades}`)
             .then((res) => {
                 var datoslibros = JSON.parse(JSON.stringify(libros));
                 var index = datoslibros.findIndex((e: library) => e.isbn == libraryData.isbn);
@@ -37,7 +39,7 @@ export default function ListaLibros() {
         setlibraryData(libro);
     }
     function deleteitem(libro: library) {
-        axios.delete(`/api/deletelibro?ISBN=${libro.isbn}`).then(res => {
+        axios.delete(host+`/api/deletelibro?ISBN=${libro.isbn}`).then(res => {
             setlibros(libros.filter(e => e != libro))
         })
     }

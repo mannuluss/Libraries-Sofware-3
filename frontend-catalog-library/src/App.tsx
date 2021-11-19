@@ -4,10 +4,16 @@ import './App.css';
 import ListaLibros from './components/ListaLibros';
 
 function App() {
-  return (
+  return (<>
+    <div className="toolbar">
+      <img width="40" src={logo} />
+      <span>Reseñas</span>
+      <div className="spacer"></div>
+    </div>
     <div className="content">
       <ListaLibros />
     </div>
+  </>
   );
 }
 
