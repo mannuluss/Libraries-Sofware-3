@@ -24,7 +24,7 @@ en cada una de las siguientes carpetas:
 y dejar que el proceso termine
 
 # Iniciar servidores
-## review-nodejs 
+## backend-reviews 
 ejecutar el comando
 ```
 npm run start
@@ -34,7 +34,7 @@ dentro de la carpeta, para iniciar en el puerto 3000 la pagina de las reseñas y
 NOTA: abrir en el navegador http://localhost:3000
 
 ## backend-library-catalog
-ejecutar como un proyecto spring boot.
+ejecutar como un proyecto spring boot. (mvn spring-boot:run)
 
 aqui se encuentra la pagina de los libros y sus servicios crud.
 
