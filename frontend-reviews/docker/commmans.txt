@@ -1,0 +1,4 @@
+docker build -t frontend-reviews-image -f docker/Dockerfile .
+docker image ls
+docker run --name fronted-reviews-container -d -p 8081:80 frontend-reviews-image
+docker container ls
