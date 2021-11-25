@@ -11,6 +11,26 @@
         },
         {
             "type": "java",
+            "name": "Spring Boot-CatalogApplication<backend-catalog-library-MYSQL>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "example.libraries.CatalogApplication",
+            "projectName": "backend-catalog-library-MYSQL",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-CatalogApplication<backend-catalog-library (2)>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "example.libraries.CatalogApplication",
+            "projectName": "backend-catalog-library (2)",
+            "args": ""
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-CatalogApplication<backend-catalog-library>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
