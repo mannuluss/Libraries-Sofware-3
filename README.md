@@ -36,6 +36,11 @@ ejecutar como un proyecto spring boot. (mvn spring-boot:run)
 
 aqui se encuentra los servicios para la pagina de libros.
 
+## backend-store
+ejecutar como un proyecto spring boot. (mvn spring-boot:run).
+
+aqui se encuentra los servicios para la tienda de libros.
+
 # Build Frontend
 ## frontend-catalog-library
 dentro de esta carpeta en una terminal ejecutar 
