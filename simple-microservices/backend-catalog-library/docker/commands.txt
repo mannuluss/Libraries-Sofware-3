@@ -1,0 +1,4 @@
+docker build -t backend-catalog-image -f docker/Dockerfile .
+docker image ls
+docker run --name backend-catalog-cont -d -p 8081:8081 backend-catalog-image
+docker container ls

@@ -1,7 +1,9 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
-const host = "http://localhost:8081";//direccion del servidor
+//direccion del servidor
+//const host = "http://localhost:8081";
+const host = "http://backend-catalog-cont:8081";
 
 interface library {
     titulo: string, isbn: string, autor: string, descripcion: string, valor: string;
