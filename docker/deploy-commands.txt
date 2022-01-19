@@ -3,14 +3,23 @@
 # creacion de la red para catalogo
 docker network create library-network
 
-# despliegue del contenedor backend de catalogo
-docker run --network=library-network --name backend-catalog-cont -d -p 8081:8081 backend-catalog-image
+# despliegue del contenedor backend de catalogo sin persistencia
+docker run --network=library-network --name backend-catalog-cont -d -p 8081:8081 backend-catalog-image:simple
 
 # despliegue del contenedor frontend de catalogo
 docker run --network=library-network --name fronted-catalog-cont -d -p 81:80 frontend-catalog-image
 
-# despliegue del contenedor backend de catalogo
-docker run --network=library-network --name backend-reviews-cont -d -p 3000:3000 backend-reviews-image
+# despliegue del contenedor backend de reviews
+docker run --network=library-network --name backend-reviews-cont -d -p 3000:3000 backend-reviews-image:simple
 
 # despliegue del contenedor frontend de reviews
-docker run --name fronted-reviews-container -d -p 82:80 frontend-reviews-image
+docker run --network=library-network --name fronted-reviews-container -d -p 82:80 frontend-reviews-image
+
+
+--- Servicios Completos ----
+
+docker run --network=library-network --name fronted-store-container -d -p 80:80 frontend-store-image
+
+# despliegue del contenedor backend de catalogo con persistencia
+
+docker run --network=library-network --name backend-catalog-cont -d -p 8081:8081 backend-catalog-image
