@@ -78,7 +78,9 @@ outputPath indica el directorio donde se guardara los archivos compilados.
 
 
 ## creacion de la red para catalogo
-`docker network create library-network`
+```
+docker network create library-network
+```
 
 ## despliegue del contenedor backend de catalogo sin persistencia
 `docker run --name backend-catalog --network=library-network -d -p 8081:8081 backend-catalog-image:simple`
