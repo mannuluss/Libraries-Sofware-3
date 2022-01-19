@@ -71,3 +71,23 @@ NOTA: dentro de angular.json
           }
 ```
 outputPath indica el directorio donde se guardara los archivos compilados.
+
+
+# Despliegue de la aplicación
+
+
+
+## creacion de la red para catalogo
+`docker network create library-network`
+
+## despliegue del contenedor backend de catalogo sin persistencia
+`docker run --name backend-catalog --network=library-network -d -p 8081:8081 backend-catalog-image:simple`
+
+## despliegue del contenedor frontend de catalogo
+`docker run --name fronted-catalog --network=library-network -d -p 81:80 frontend-catalog-image`
+
+## despliegue del contenedor backend de reviews
+`docker run --name backend-reviews --network=library-network -d -p 3000:3000 backend-reviews-image:simple`
+
+## despliegue del contenedor frontend de reviews
+`docker run --name fronted-reviews --network=library-network  -d -p 82:80 frontend-reviews-image`
