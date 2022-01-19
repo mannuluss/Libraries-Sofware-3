@@ -6,4 +6,4 @@ COPY target/backend-store-0.0.1-SNAPSHOT.jar /usr/share/app.jar
 # Lanza el ejecutable usando java 
 CMD ["java", "-jar", "/usr/share/app.jar"]
 # Expone el puerto 8081
-EXPOSE 8081
+EXPOSE 8082
