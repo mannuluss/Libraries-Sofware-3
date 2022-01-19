@@ -4,7 +4,7 @@
 
 Este proyecto busca proveer un ambiente de aprendizaje para la utilización de docker como herramienta de despliegue de aplicaciones. El proyecto trata de una libreria virtual y está dividido en 3 fases:
 
-###Fase 1:
+### Fase 1:
 Consta de 2 microservicios y 2 frontends 
 
 - backend-library-catalog : Backend Catalogo de libros (Springboot)
@@ -14,14 +14,14 @@ Consta de 2 microservicios y 2 frontends
 
 En esta fase los microservicios no tienen persistencia, los datos son almacenados en memoria
 
-###Fase 2:
+### Fase 2:
 Esta fase es similar a la anterior con la diferencia que los microservicios tiene persistencia
 - backend-library-catalog : Backend Catalogo de libros (Springboot + MySQL)
 - backend-reviews : Backend Reviews de lectores (Node + Express + MongoDB)
 - frontend-catalog-library : Frontend Catalogo de libros (React)
 - frontend-reviews : Frontend Reviews de lectores (Angular)
 
-###Fase 3:
+### Fase 3:
 En esta fase se agrega a los miroservicios de la fase 2 un microservicio store y su respectivo frontend
 - backend-library-catalog : Backend Catalogo de libros (Springboot + MySQL)
 - backend-reviews : Backend Reviews de lectores (Node + Express + MongoDB)
