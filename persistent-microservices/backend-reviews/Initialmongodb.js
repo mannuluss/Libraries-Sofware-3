@@ -3,7 +3,9 @@ const moongose = require("mongoose");
 const reseñasModel = require("./models/ModelReviews");
 
 //configuracion conexion con mongodb
-moongose.connect(process.env.uri_mongodb, null, () => { console.log("=> Connect with mongondb") });
+
+//moongose.connect(process.env.uri_mongodb, null, () => { console.log("=> Connect with mongondb") });
+moongose.connect('mongodb://localhost:27017/test', null, () => { console.log("=> Connect with mongondb") });
 
 var InitialReviews = [
     {
