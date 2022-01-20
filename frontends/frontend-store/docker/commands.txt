@@ -1,4 +1,0 @@
-docker build -t frontend-store-image -f docker/Dockerfile .
-docker image ls
-docker run --name fronted-store-container -d -p 80:80 frontend-store-image
-docker container ls

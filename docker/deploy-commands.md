@@ -18,7 +18,7 @@ docker run --name fronted-catalog --network=library-network -d -p 81:80 frontend
 docker run --name fronted-reviews --network=library-network  -d -p 82:80 frontend-reviews-image
 ```
 
-### despliegue del frontend de reviews
+### despliegue del frontend de store
 ```
 docker run --name fronted-store --network=library-network -d -p 80:80 frontend-store-image
 ```

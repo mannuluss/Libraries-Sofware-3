@@ -1,4 +1,0 @@
-docker build -t backend-reviews-image -f docker/Dockerfile .
-docker image ls
-docker run --name backend-reviews-container -d -p 3000:3000 backend-reviews-image
-docker container ls
