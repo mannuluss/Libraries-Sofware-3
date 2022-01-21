@@ -76,7 +76,7 @@ docker run --name=mongodb-reviews --network=library-network -d -p 27017:27017 mo
 2. Con volumen identificado
 
 ```
-docker run --name=mongodb-reviews --network=library-network -d -p 27017:27017 -v mongodb-reviews-vol:/data/dbl mongo:5.0.5
+docker run --name=mongodb-reviews --network=library-network -d -p 27017:27017 -v mongodb-reviews-vol:/data/db mongo:5.0.5
 ```
 
 
