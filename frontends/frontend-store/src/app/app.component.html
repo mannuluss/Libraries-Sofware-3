@@ -11,7 +11,8 @@
       <mat-icon>account_circle</mat-icon>
       <mat-form-field style="max-width: 150px;" appearance="fill">
         <mat-label>usuario</mat-label>
-        <input matInput placeholder="student" [value]="usuario" [(ngModel)]="usuario" (ngModelChange)="usuario = $event">
+        <input matInput placeholder="student" [value]="usuario" [(ngModel)]="usuario"
+          (ngModelChange)="usuario = $event">
       </mat-form-field>
       <button mat-flat-button color="primary" (click)="ChangeUser()">Ingresar</button>
     </div>
@@ -33,12 +34,28 @@
       <br>
       <span class="author">{{item.autor}}</span>
       <br>
+      <div style="display: inline-flex; align-items: center; justify-content: space-between;">
+        <img [src]="'./assets/estrellas'+round(GetMeanStars(item.isbn))+'.png'" width="80%">
+        <span>{{GetMeanStars(item.isbn)}}</span>
+        <span>({{CountReviews(item.isbn)}})</span>
+      </div>
+      <br>
       <span class="price">${{item.valor}}</span>
       <br>
-      <button class="add-carrito" (click)="onclickAddCart(item.isbn, carrito[item.isbn])">
+      <button class="add-carrito" (click)="onclickAddCart(item.isbn)">
         Agregar al carrito</button>
+      <button class="btn-details" (click)="detalle(item)">Ver Detalle</button>
     </div>
   </div>
+
+  
+  <app-details [isShow]="ShowDetails" [data]="detailsData" [libro]="currentLibro" 
+    (onAddCart)="onclickAddCart($event)" style="width: 100%;">
+    <div class="regresar-btn" (click)="SetState('inicio')">
+      <mat-icon>keyboard_backspace</mat-icon>
+      Regresar
+    </div>
+  </app-details>
 
   <div class="content-card-carrito" *ngIf="state == 'carrito'">
     <div class="regresar-btn" (click)="SetState('inicio')">

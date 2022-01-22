@@ -166,3 +166,14 @@ svg.material-icons:not(:last-child) {
   align-items: center;
 }
 
+.btn-details{
+  margin-top: 10px;
+  border: 1px solid orange;
+  border-radius: 3px;
+  background-color: white;
+  padding: 10px;
+}
+.btn-details:hover{
+  background-color: rgb(223, 209, 14);
+  cursor: pointer;
+}

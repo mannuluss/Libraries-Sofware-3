@@ -98,7 +98,7 @@ export default function ListaLibros() {
             <div>
                 <label >Descripcion</label>
                 <input type="text" value={libraryData.descripcion}
-                    onChange={(evt) => { ChangesValues("reseña", evt.target.value) }} />
+                    onChange={(evt) => { ChangesValues("descripcion", evt.target.value) }} />
 
             </div>
             <div>

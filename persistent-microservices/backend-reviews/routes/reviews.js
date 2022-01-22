@@ -4,12 +4,14 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/reviews', async function (req, res, next) {
+  console.log("-> request /reviews")
   var docs = await reseñasModel.find({})
   res.json(docs);
 });
 
 /* POST users listing. */
 router.post('/addreviews', async function (req, res, next) {
+  console.log("-> post reviews")
   var doc = await reseñasModel.findOne({ isbn: req.query.isbn, usuario: req.query.usuario });
   if (doc == null) {
     reseñasModel.insertMany(req.query).then((state) => {
@@ -25,7 +27,7 @@ router.post('/addreviews', async function (req, res, next) {
 });
 
 /* DELETE users listing. */
-router.delete('/deletereviews',async function (req, res, next) {
+router.delete('/deletereviews', async function (req, res, next) {
   var doc = await reseñasModel.findOne({ isbn: req.query.isbn, usuario: req.query.usuario });
   if (doc == null) {
     res.json({ error: "no existe en la base de datos" });

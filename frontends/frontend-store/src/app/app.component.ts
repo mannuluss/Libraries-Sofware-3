@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { MatSelectChange } from '@angular/material/select';
 
-interface listaReview {
+export interface Review {
   usuario: string,
   isbn: string,
   estrellas: number,
   comentario: string
 }
-interface library {
+export interface library {
   titulo: string, isbn: string, autor: string, descripcion: string, valor: string;
   unidades: number;
 }
@@ -27,13 +27,17 @@ export class AppComponent {
   hoststore = "http://localhost:8082"//direccion del servidor de la tienda (spring)
 
   libros: library[] = [];
+  reviews: Review[] = [];
   usuario = "student";
-  //storeCard: string[] = [];//lista de isbn 
   carrito: CartRelation = {};
 
-  state: "inicio" | "carrito" = "inicio";
+  detailsData: Review[] = [];
+  currentLibro: any = {};
+  get ShowDetails() { return this.state == "detalles" }
 
-  SetState(value: "inicio" | "carrito") { this.state = value; }
+  state: "inicio" | "carrito" | "detalles" = "inicio";
+
+  SetState(value: "inicio" | "carrito" | "detalles") { this.state = value; }
 
   GetTotal() {
     var keys = Object.keys(this.carrito);
@@ -44,11 +48,26 @@ export class AppComponent {
     return total;
   }
   KeysObjet = Object.keys;
+  round = Math.round;
+
+  GetMeanStars(isbn: string) {
+    var mean = 0;
+    var lista = this.reviews.filter(value => value.isbn == isbn)
+    lista.forEach(element => {
+      mean += element.estrellas;
+    })
+    if (lista.length != 0)
+      mean = mean / lista.length;
+    return Number(mean.toFixed(2));
+  }
+  CountReviews(isbn: string){
+    return this.reviews.filter(value => value.isbn == isbn).length;
+  }
 
   constructor(private http: HttpClient) {
     this.init(http)
   }
-  init(http: HttpClient){
+  init(http: HttpClient) {
     http.get(this.hostlibros + "/api/getlibros").subscribe((res) => {
       this.libros = res as library[];
     })
@@ -61,15 +80,23 @@ export class AppComponent {
           this.carrito[item.isbn] = { libro: libro, cant: item.cantidad };
       }
     })
+
+    http.get(this.hostreviews + "/reviews").subscribe(res => {
+      console.log("get reviews", res);
+      this.reviews = res as Review[];
+    });
   }
 
-  onclickAddCart(isbn: string, cart?: CartDataAngular) {
+  onclickAddCart(isbn: string) {
+    console.log("call onclick")
+    var cart = this.carrito[isbn]
     if (cart) {
       if (cart.cant + 1 < cart.libro.unidades)
         this.addcart(isbn, cart.cant + 1)
     } else
       this.addcart(isbn, 1);
   }
+
   addcart(isbn: string, cant: number) {
 
     //var index = this.storeCard.findIndex((item) => item == isbn)
@@ -99,9 +126,15 @@ export class AppComponent {
     })
   }
 
-  ChangeUser(){
+  ChangeUser() {
     console.log(this.usuario)
     this.carrito = {};
     this.init(this.http)
+  }
+
+  detalle(item: library) {
+    this.currentLibro = item;
+    this.detailsData = this.reviews.filter(value => value.isbn == item.isbn).sort((a, b) => b.estrellas - a.estrellas);
+    this.SetState("detalles")
   }
 }

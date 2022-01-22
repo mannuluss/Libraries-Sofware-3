@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
-interface listaReview {
+interface Review {
   usuario: string,
   isbn: string,
   estrellas: number,
@@ -17,7 +17,7 @@ interface listaReview {
 export class AppComponent {
   host = "http://localhost:3000"//direccion del servidor
   title = 'frontend-review';
-  lista: listaReview[] = []
+  lista: Review[] = []
 
   /*
   otra manera de obtener la referencia hacia un elemento en el DOM
@@ -29,12 +29,13 @@ export class AppComponent {
   public isbn = "";
   public stars = 0;
   public comentario = "";
+  public id: string | null = null;
 
 
   constructor(private http: HttpClient) {
-    http.get(this.host+"/reviews").subscribe((res) => {
+    http.get(this.host + "/reviews").subscribe((res) => {
       console.log(res);
-      this.lista = res as listaReview[];
+      this.lista = res as Review[];
     })
   }
 
@@ -54,13 +55,13 @@ export class AppComponent {
 
     })
   }
-  deleteitem(item: listaReview) {
+  deleteitem(item: Review) {
     console.log(item)
-    this.http.delete(this.host+`/deletereviews?usuario=${item.usuario}&isbn=${item.isbn}`).subscribe((res) => {
+    this.http.delete(this.host + `/deletereviews?usuario=${item.usuario}&isbn=${item.isbn}`).subscribe((res) => {
       this.lista = this.lista.filter(e => e != item);
     })
   }
-  editar(item: listaReview) {
+  editar(item: Review) {
     this.usuario = item.usuario;
     this.isbn = item.isbn;
     this.comentario = item.comentario;

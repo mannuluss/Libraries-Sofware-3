@@ -14,7 +14,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //configuracion conexion
-moongose.connect(process.env.uri_mongodb, null, () => { console.log("=> Connect with mongondb") });
+moongose.connect(process.env.uri_mongodb, null, (err) => {
+    if (err)
+        console.log(err)
+    else console.log("=> Connect with mongondb")
+});
 
 var reseñaRouter = require('./routes/reviews');
 app.use('/', reseñaRouter);
