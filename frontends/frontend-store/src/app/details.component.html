@@ -23,6 +23,7 @@
     }
 
     .top-tittle {
+        margin-top: 15px;
         margin-bottom: 10px;
     }
 
@@ -59,8 +60,10 @@
         <h1>{{libro.titulo}}</h1>
         <div class="div-tittle-addcart">
             <span class="author-span">{{libro.autor}}</span>
+            <p class="price">${{libro.valor}}</p>
             <button class="add-carrito" (click)="EmmitAddCart()">Agregar al carrito</button>
         </div>
+        <span>ISBN   {{libro.isbn}}</span>
     </div>
 
     <div class="content-descrip">

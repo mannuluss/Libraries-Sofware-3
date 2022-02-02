@@ -76,12 +76,6 @@ svg.material-icons:not(:last-child) {
   background-color: #4c4c4c;
 }
 
-.price {
-  color: black;
-  font-weight: bold;
-  font-size: 1.5em;
-  text-align: end;
-}
 .title{
   font-size: 2em;
   font-family:'Helvetica','Verdana','Monaco',sans-serif;
