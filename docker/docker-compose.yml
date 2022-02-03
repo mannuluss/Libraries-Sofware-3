@@ -1,0 +1,94 @@
+version: "3.1"
+
+services:
+
+  # REVIEWS
+  mongo:
+    container_name: mongodb-reviews
+    ports:
+      - '27017:27017'
+    volumes:
+      - 'mongodb-reviews-vol:/data/configdb'
+    image: 'mongo:5.0.5'
+
+  backend-reviews:
+    container_name: backend-reviews
+    image: 'backend-reviews-image'
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+
+  frontend-reviews:
+    container_name: frontend-reviews
+    image: 'frontend-reviews-image'
+    ports:
+      - "81:80"
+    depends_on:
+      - backend-reviews
+
+  # CATALOG
+
+  mysql:
+    image: 'mysql:8.0.27'
+    container_name: mysql-library
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=catalog-library
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-library-vol:/var/lib/mysql
+
+  backend-catalog-library:
+    container_name: backend-catalog-library
+    image: 'backend-catalog-image'
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+    #Se agregó la herramienta docker-compose-wait para garantizar que los servicios de mysql estuviesen funcionando al momento de lanza la app de Spring
+    command: sh -c "wget https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.2/wait && chmod +x /wait && /wait && java -jar /usr/share/app.jar"
+    environment:
+      - WAIT_HOSTS=mysql:3306
+      - WAIT_HOSTS_TIMEOUT=250
+      - WAIT_SLEEP_INTERVAL=10
+      - WAIT_HOST_CONNECT_TIMEOUT=20
+
+  frontend-catalog-library:
+    container_name: frontend-catalog-library
+    image: 'frontend-catalog-image'
+    ports:
+      - "82:80"
+    depends_on:
+      - backend-catalog-library
+
+  # STORE
+  backend-store-library:
+    container_name: backend-store-library
+    image: 'backend-store-image'
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql
+    #Se agregó la herramienta docker-compose-wait para garantizar que los servicios de mysql estuviesen funcionando al momento de lanza la app de Spring
+    command: sh -c "wget https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.2/wait && chmod +x /wait && /wait && java -jar /usr/share/app.jar"
+    environment:
+      - WAIT_HOSTS=mysql:3306
+      - WAIT_HOSTS_TIMEOUT=250
+      - WAIT_SLEEP_INTERVAL=10
+      - WAIT_HOST_CONNECT_TIMEOUT=20
+
+  frontend-store:
+    container_name: frontend-store
+    image: 'frontend-store-image'
+    ports:
+      - "80:80"
+    depends_on:
+      - backend-store-library
+
+volumes:
+  mysql-library-vol:
+    external: false
+  mongodb-reviews-vol:
+    external: false
