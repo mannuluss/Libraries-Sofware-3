@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3.2"
 
 services:
 
@@ -10,6 +10,8 @@ services:
     volumes:
       - 'mongodb-reviews-vol:/data/configdb'
     image: 'mongo:5.0.5'
+    networks:
+      - book-store-network
 
   backend-reviews:
     container_name: backend-reviews
@@ -18,6 +20,8 @@ services:
       - "3000:3000"
     depends_on:
       - mongo
+    networks:
+      - book-store-network
 
   frontend-reviews:
     container_name: frontend-reviews
@@ -26,6 +30,8 @@ services:
       - "81:80"
     depends_on:
       - backend-reviews
+    networks:
+      - book-store-network
 
   # CATALOG
 
@@ -39,6 +45,8 @@ services:
       - '3306:3306'
     volumes:
       - mysql-library-vol:/var/lib/mysql
+    networks:
+      - book-store-network
 
   backend-catalog-library:
     container_name: backend-catalog-library
@@ -47,6 +55,8 @@ services:
       - "8081:8081"
     depends_on:
       - mysql
+    networks:
+      - book-store-network
     #Se agregó la herramienta docker-compose-wait para garantizar que los servicios de mysql estuviesen funcionando al momento de lanza la app de Spring
     command: sh -c "wget https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.2/wait && chmod +x /wait && /wait && java -jar /usr/share/app.jar"
     environment:
@@ -54,6 +64,11 @@ services:
       - WAIT_HOSTS_TIMEOUT=250
       - WAIT_SLEEP_INTERVAL=10
       - WAIT_HOST_CONNECT_TIMEOUT=20
+      - MYSQL_DB_HOST=mysql-library
+      - MYSQL_DB_PORT=3306
+      - MYSQL_DB_USERNAME=root
+      - MYSQL_DB_PASSWORD=password
+
 
   frontend-catalog-library:
     container_name: frontend-catalog-library
@@ -62,6 +77,8 @@ services:
       - "82:80"
     depends_on:
       - backend-catalog-library
+    networks:
+      - book-store-network
 
   # STORE
   backend-store-library:
@@ -71,6 +88,8 @@ services:
       - "8082:8082"
     depends_on:
       - mysql
+    networks:
+      - book-store-network
     #Se agregó la herramienta docker-compose-wait para garantizar que los servicios de mysql estuviesen funcionando al momento de lanza la app de Spring
     command: sh -c "wget https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.2/wait && chmod +x /wait && /wait && java -jar /usr/share/app.jar"
     environment:
@@ -78,6 +97,10 @@ services:
       - WAIT_HOSTS_TIMEOUT=250
       - WAIT_SLEEP_INTERVAL=10
       - WAIT_HOST_CONNECT_TIMEOUT=20
+      - MYSQL_DB_HOST=mysql-library
+      - MYSQL_DB_PORT=3306
+      - MYSQL_DB_USERNAME=root
+      - MYSQL_DB_PASSWORD=password
 
   frontend-store:
     container_name: frontend-store
@@ -86,9 +109,15 @@ services:
       - "80:80"
     depends_on:
       - backend-store-library
+    networks:
+      - book-store-network
 
 volumes:
   mysql-library-vol:
     external: false
   mongodb-reviews-vol:
     external: false
+
+networks:
+  book-store-network:
+    driver: bridge
