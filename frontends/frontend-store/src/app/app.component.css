@@ -44,6 +44,7 @@
 .content-card{
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .content-card-carrito{
   display: flex;
@@ -170,4 +171,16 @@ svg.material-icons:not(:last-child) {
 .btn-details:hover{
   background-color: rgb(223, 209, 14);
   cursor: pointer;
+}
+.btn-comprar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-comprar.disabled{
+  background-color: #424242;
+}
+.loading{
+  width: 45px !important;
+  height: 45px !important;
 }

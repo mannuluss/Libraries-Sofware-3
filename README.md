@@ -1,4 +1,5 @@
 # Libraries Sofware 3
+![](Diagrama.png)
 
 ## Descripción
 
@@ -84,7 +85,7 @@ tambien funciona
 ng build
 ```
 NOTA: dentro de angular.json 
-```
+```json
 "build": {
           ...
           "options": {

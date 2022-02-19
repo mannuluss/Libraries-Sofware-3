@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import store.backendstore.mysqlservices.ICartService;
+import store.backendstore.rabbitmq.MsjBroker;
+import store.backendstore.rabbitmq.RabbitMQSender;
 
 @RestController
 @RequestMapping("/api")
@@ -23,7 +25,15 @@ public class StoreController {
 
     @Autowired
     private ICartService service;
+    // private final RabbitTemplate rabbitTemplate;
+    @Autowired
+    RabbitMQSender rabbitMQSender;
 
+    /*
+     * public StoreController(RabbitTemplate rabbitTemplate) {
+     * this.rabbitTemplate = rabbitTemplate;
+     * }
+     */
     public StoreController() {
     }
 
@@ -50,4 +60,15 @@ public class StoreController {
         return new ResponseEntity<String>("{\"status\":\"OK\"}", HttpStatus.OK);
     }
 
+    @PostMapping("/buycart")
+    public ResponseEntity<?> BuyCart(@RequestParam(value = "usuario") String nombreuser) {
+        List<Cart> carrito = service.GetCart(nombreuser);
+        var SendMsj = rabbitMQSender.send(new MsjBroker(nombreuser, carrito));
+        if (SendMsj) {
+            service.DeleteAllCartUser(nombreuser);
+            return new ResponseEntity<String>("{\"status\":\"OK\"}", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("{\"status\":\"ERROR\"}", HttpStatus.OK);
+        }
+    }
 }

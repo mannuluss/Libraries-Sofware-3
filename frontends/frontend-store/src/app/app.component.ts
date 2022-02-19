@@ -30,6 +30,7 @@ export class AppComponent {
   reviews: Review[] = [];
   usuario = "student";
   carrito: CartRelation = {};
+  sendDataCarrito: boolean = false;
 
   detailsData: Review[] = [];
   currentLibro: any = {};
@@ -60,7 +61,7 @@ export class AppComponent {
       mean = mean / lista.length;
     return Number(mean.toFixed(2));
   }
-  CountReviews(isbn: string){
+  CountReviews(isbn: string) {
     return this.reviews.filter(value => value.isbn == isbn).length;
   }
 
@@ -72,19 +73,24 @@ export class AppComponent {
       this.libros = res as library[];
     })
 
-    http.get(this.hoststore + `/api/getcart?usuario=${this.usuario}`).subscribe((res) => {
+    this.GetCartShopUser();
+
+    http.get(this.hostreviews + "/reviews").subscribe(res => {
+      console.log("get reviews", res);
+      this.reviews = res as Review[];
+    });
+  }
+
+  GetCartShopUser() {
+    this.http.get(this.hoststore + `/api/getcart?usuario=${this.usuario}`).subscribe((res) => {
       console.log("getCart", res);
+      this.carrito = {};
       for (const item of res as Cart[]) {
         var libro = this.libros.find((e) => e.isbn == item.isbn)
         if (libro)
           this.carrito[item.isbn] = { libro: libro, cant: item.cantidad };
       }
     })
-
-    http.get(this.hostreviews + "/reviews").subscribe(res => {
-      console.log("get reviews", res);
-      this.reviews = res as Review[];
-    });
   }
 
   onclickAddCart(isbn: string) {
@@ -119,7 +125,6 @@ export class AppComponent {
   }
 
   deletecart(isbn: string) {
-    //this.storeCard = this.storeCard.filter((element) => element != isbn);
     delete this.carrito[isbn];
     this.http.delete(this.hoststore + `/api/deletecart?usuario=${this.usuario}&isbn=${isbn}`).subscribe((res) => {
       console.log(res)
@@ -137,4 +142,19 @@ export class AppComponent {
     this.detailsData = this.reviews.filter(value => value.isbn == item.isbn).sort((a, b) => b.estrellas - a.estrellas);
     this.SetState("detalles")
   }
+
+  Comprar() {
+    console.log(this.carrito);
+    this.sendDataCarrito = true;
+    this.http.post(this.hoststore + `/api/buycart?usuario=${this.usuario}`, null)
+      .subscribe((res: any) => {
+        console.log(res);
+        this.sendDataCarrito = false;
+        if (res.status == "ERROR")
+          window.alert("En este momento no podemos procesar su compra, intente mas tarde");
+        else
+          this.GetCartShopUser();
+      })
+  }
+
 }

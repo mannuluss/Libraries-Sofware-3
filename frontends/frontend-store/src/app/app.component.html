@@ -48,9 +48,9 @@
     </div>
   </div>
 
-  
-  <app-details [isShow]="ShowDetails" [data]="detailsData" [libro]="currentLibro" 
-    (onAddCart)="onclickAddCart($event)" style="width: 100%;">
+
+  <app-details [isShow]="ShowDetails" [data]="detailsData" [libro]="currentLibro" (onAddCart)="onclickAddCart($event)"
+    style="width: 100%;">
     <div class="regresar-btn" (click)="SetState('inicio')">
       <mat-icon>keyboard_backspace</mat-icon>
       Regresar
@@ -83,6 +83,12 @@
       </div>
 
     </div>
+
+    <button mat-raised-button [ngClass]="'btn-comprar'+(this.sendDataCarrito?' disabled':'')" (click)="Comprar()" [disabled]="this.sendDataCarrito">
+        <span *ngIf="!this.sendDataCarrito">Comprar</span>
+        <span *ngIf="this.sendDataCarrito">Enviando...</span>
+        <mat-spinner *ngIf="this.sendDataCarrito" class="loading"></mat-spinner>
+    </button>
   </div>
 </div>
 

@@ -40,17 +40,10 @@ public class CartServices implements ICartService {
         repo.deleteCart(isbn, nameuser);
     }
 
-    // @Override
-    // @Transactional(readOnly = false)
-    // public void Insert(String iSBN, String titulo, String autor, String
-    // descripcion, String valor, Integer unidades) {
-    // repo.Insert(iSBN, titulo, autor, descripcion, valor, unidades);
-    // }
-
-    // @Override
-    // @Transactional(readOnly = false)
-    // public void Delete(String isbn) {
-    // repo.DeletebyISBN(isbn);
-    // }
+    @Override
+    @Transactional(readOnly = false)
+    public void DeleteAllCartUser(String nameuser) {
+        repo.deleteAllCart(nameuser);
+    }
 
 }

@@ -9,4 +9,5 @@ public interface ICartService {
     public List<Cart> GetCart(String user);
     public void AddCartUser(String isbn, String nameuser,int cantidad);
     public void DeleteCartUser(String isbn, String nameuser);
+    public void DeleteAllCartUser(String username);
 }

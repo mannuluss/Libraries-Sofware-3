@@ -38,5 +38,12 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE DeleteAllCartUser(usuario VARCHAR(60))
+BEGIN
+	DELETE FROM cart c WHERE c.usuario = usuario;
+END //
+DELIMITER ;
+
 
 INSERT INTO cart (usuario,isbn,cantidad) VALUES ("student", "9789584276971", 5);
