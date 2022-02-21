@@ -3,6 +3,9 @@ FROM node:17.1-alpine3.12
 # Create app directory
 WORKDIR /usr/src/app
 
+#Define las variables de ambiente
+ENV MONGODB_HOST=mongodb-reviews
+
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)

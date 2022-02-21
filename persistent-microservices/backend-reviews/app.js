@@ -13,10 +13,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//const mongourl = process.argv[2] == 'docker' ? process.env.uri_mongodb_docker : process.env.uri_mongodb;
-const mongourl = process.env.uri_mongodb;
+
+let uri_mongodb = `mongodb://${process.env.MONGODB_HOST}:27017/test`;
+
+console.log(uri_mongodb);
+
 //configuracion conexion
-moongose.connect(mongourl, null, (err) => {
+moongose.connect(uri_mongodb, null, (err) => {
     if (err)
         console.log(err)
     else console.log("=> Connect with mongondb")

@@ -1,15 +1,19 @@
 const amqplib = require('amqplib');
 require('dotenv').config();
 const logger = require("./logger");
-const amqpUrl = process.argv[2] == "docker"? process.env.AMQP_URI_DOCKER :process.env.AMQP_URI;
 const queue = "cartshop";
+
+const amqpUrl = process.argv[2] == "docker"? process.env.AMQP_URI_DOCKER :process.env.AMQP_URI;
+let uri_amqp = `amqp://guest:guest@${process.env.RABBITMQ_HOST}:5672`;
+
+console.log(uri_amqp);
 
 async function ConsumeMenssage(msgjson) {
   logger.info("log", msgjson)
 }
 
 (async () => {
-  const connection = await amqplib.connect(amqpUrl, "heartbeat=60");
+  const connection = await amqplib.connect(uri_amqp, "heartbeat=60");
   const channel = await connection.createChannel();
   channel.prefetch(10);
   //const queue = 'user.sign_up_email';

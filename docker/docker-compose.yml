@@ -81,13 +81,27 @@ services:
       - book-store-network
 
   # STORE
-  backend-store-library:
-    container_name: backend-store-library
+
+  rabbitmq:
+    container_name: 'rabbitmq'
+    image: rabbitmq:3.9.13-management
+    ports:
+        - 5672:5672
+        - 15672:15672
+    networks:
+        - book-store-network
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest 
+      - RABBITMQ_DEFAULT_PASS=guest
+
+  backend-store:
+    container_name: backend-store
     image: 'backend-store-image'
     ports:
       - "8082:8082"
     depends_on:
       - mysql
+      - rabbitmq
     networks:
       - book-store-network
     #Se agregó la herramienta docker-compose-wait para garantizar que los servicios de mysql estuviesen funcionando al momento de lanza la app de Spring
@@ -101,6 +115,7 @@ services:
       - MYSQL_DB_PORT=3306
       - MYSQL_DB_USERNAME=root
       - MYSQL_DB_PASSWORD=password
+      - RABBITMQ_HOST=rabbitmq
 
   frontend-store:
     container_name: frontend-store
@@ -108,7 +123,7 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - backend-store-library
+      - backend-store
     networks:
       - book-store-network
 
