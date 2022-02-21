@@ -19,6 +19,7 @@ public class RabbitMQSender {
 
 	public boolean send(Object company) {
 		try {
+			System.out.println("Message ton send >>>>>>>> " + company);
 			rabbitTemplate.convertAndSend(exchange, routingkey, company);
 			System.out.println("Send msg =" + company);
 			return true;

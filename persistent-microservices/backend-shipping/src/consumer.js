@@ -3,7 +3,7 @@ require('dotenv').config();
 const logger = require("./logger");
 const queue = "cartshop";
 
-const amqpUrl = process.argv[2] == "docker"? process.env.AMQP_URI_DOCKER :process.env.AMQP_URI;
+//const amqpUrl = process.argv[2] == "docker"? process.env.AMQP_URI_DOCKER :process.env.AMQP_URI;
 let uri_amqp = `amqp://guest:guest@${process.env.RABBITMQ_HOST}:5672`;
 
 console.log(uri_amqp);
