@@ -48,8 +48,8 @@ services:
     networks:
       - book-store-network
 
-  backend-catalog-library:
-    container_name: backend-catalog-library
+  backend-catalog:
+    container_name: backend-catalog
     image: 'backend-catalog-image'
     ports:
       - "8081:8081"
@@ -70,13 +70,13 @@ services:
       - MYSQL_DB_PASSWORD=password
 
 
-  frontend-catalog-library:
-    container_name: frontend-catalog-library
+  frontend-catalog:
+    container_name: frontend-catalog
     image: 'frontend-catalog-image'
     ports:
       - "82:80"
     depends_on:
-      - backend-catalog-library
+      - backend-catalog
     networks:
       - book-store-network
 
@@ -127,6 +127,19 @@ services:
     networks:
       - book-store-network
 
+
+  # Shipping Service
+  backend-shipping:
+    container_name: backend-shipping
+    image: backend-shipping-image
+    ports:
+      - "3001:3000"
+    depends_on:
+      - rabbitmq      
+    networks:
+      - book-store-network
+    environment:  
+      - RABBITMQ_HOST=rabbitmq          
 volumes:
   mysql-library-vol:
     external: false
