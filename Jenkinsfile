@@ -27,6 +27,7 @@ pipeline {
     stage("deploy") {
       steps {
         echo 'This is the deploy phase'
+        echo 'The deploy phase has been done rigth!'
       }
     }
   }
