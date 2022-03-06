@@ -11,13 +11,16 @@ pipeline {
     
     stage("build backends") {
       steps {
-          step {
-          echo 'Building Catalog Backend'
-          dir ('persistent-microservices/backend-catalog/') {
-            sh 'pwd'
-            sh 'mvn -Dmaven.test.failure.ignore=true install'          
-          }
-        }
+        echo 'Building Catalog Backend'
+        dir ('persistent-microservices/backend-catalog/') {
+          sh 'pwd'
+          sh 'mvn -Dmaven.test.failure.ignore=true install'
+        }      
+        echo 'Building Store Backend'
+        dir ('persistent-microservices/backend-store/') {
+          sh 'pwd'
+          sh 'mvn -Dmaven.test.failure.ignore=true install'
+        }       
       }
     }
     
