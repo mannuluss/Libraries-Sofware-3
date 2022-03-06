@@ -14,8 +14,8 @@ pipeline {
         echo 'This is the building phase'
         dir ('persistent-microservices/backend-catalog/') {
           sh 'pwd'
+          sh 'mvn -Dmaven.test.failure.ignore=true install'          
         }
-        sh 'mvn -Dmaven.test.failure.ignore=true install' 
       }
     }
     
