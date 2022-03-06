@@ -15,9 +15,13 @@ pipeline {
         dir ('persistent-microservices/backend-catalog/') {
           sh 'pwd'
           sh 'mvn -Dmaven.test.failure.ignore=true install'
+          def customImage = docker.build("chaphe/backend-catalog-image:1.0")
+          customImage.push()
+          /*
           script {
-            def customImage = docker.build("my-image")
+            def customImage = docker.build("chaphe/backend-catalog-image:1.0")
           }
+          */
         }      
         echo 'Building Store Backend'
         dir ('persistent-microservices/backend-store/') {
