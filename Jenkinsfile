@@ -12,7 +12,8 @@ pipeline {
     stage("build") {
       steps {
         echo 'This is the building phase'
-         sh 'mvn -Dmaven.test.failure.ignore=true install' 
+        sh 'cd persistent-microservices/backend-catalog/'
+        sh 'mvn -Dmaven.test.failure.ignore=true install' 
       }
     }
     
