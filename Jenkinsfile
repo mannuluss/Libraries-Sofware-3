@@ -12,7 +12,9 @@ pipeline {
     stage("build") {
       steps {
         echo 'This is the building phase'
-        sh 'cd persistent-microservices/backend-catalog/'
+        dir ('persistent-microservices/backend-catalog/') {
+          sh 'pwd'
+        }
         sh 'mvn -Dmaven.test.failure.ignore=true install' 
       }
     }
