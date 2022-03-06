@@ -15,6 +15,7 @@ pipeline {
         dir ('persistent-microservices/backend-catalog/') {
           sh 'pwd'
           sh 'mvn -Dmaven.test.failure.ignore=true install'
+          docker.build("backend-catalog-image-jen")
         }      
         echo 'Building Store Backend'
         dir ('persistent-microservices/backend-store/') {
