@@ -17,7 +17,8 @@ pipeline {
           sh 'mvn -Dmaven.test.failure.ignore=true install'
           script {
             def customImage = docker.build("chaphe/backend-catalog-image:1.0")
-            customImage.push()
+            echo $dockerhub_USR
+            //customImage.push()
           }
         }      
         echo 'Building Store Backend'
