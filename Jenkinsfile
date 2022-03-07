@@ -19,30 +19,27 @@ pipeline {
     }
     stage("build backends") {
       steps {
-        echo 'Building Catalog Backend'
+        // Backend Catalog
         dir ('persistent-microservices/backend-catalog/') {
-          sh 'pwd'
           sh 'mvn -Dmaven.test.failure.ignore=true install'
-          sh 'docker build -t backend-catalog-image .'
-          sh 'docker tag backend-catalog-image chaphe/backend-catalog-image:1.0'
-          /*
-          script {
-            def customImage = docker.build("chaphe/backend-catalog-image:1.0")
-            
-          }
-          */
-        }      
+          sh 'docker build -t backend-catalog-image -f docker/Dockerfile .'
+          
+        }
+        //Backend Store
         echo 'Building Store Backend'
         dir ('persistent-microservices/backend-store/') {
-          sh 'pwd'
           sh 'mvn -Dmaven.test.failure.ignore=true install'
+          sh 'docker build -t backend-store-image -f docker/Dockerfile .'
         }       
       }
     }
 
     stage('Push Docker Images') {
       steps {
+        sh 'docker tag backend-catalog-image chaphe/backend-catalog-image:1.0'
         sh 'docker push chaphe/backend-catalog-image:1.0'
+        sh 'docker tag backend-store-image chaphe/backend-store-image:1.0'
+        sh 'docker push chaphe/backend-store-image:1.0'
       }
     }
     
