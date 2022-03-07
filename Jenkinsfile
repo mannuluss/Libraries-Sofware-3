@@ -6,16 +6,23 @@ pipeline {
     maven 'Maven 3.8.3'
     jdk 'JDK11'
   }
+
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+  }
   
   stages {
-    
+    stage('Login Dockerhub') {
+      steps {
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
+    }
     stage("build backends") {
       steps {
         echo 'Building Catalog Backend'
         dir ('persistent-microservices/backend-catalog/') {
           sh 'pwd'
           sh 'mvn -Dmaven.test.failure.ignore=true install'
-          echo $dockerhub_USR
           script {
             def customImage = docker.build("chaphe/backend-catalog-image:1.0")
             
