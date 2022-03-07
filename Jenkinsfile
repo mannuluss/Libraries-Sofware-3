@@ -31,6 +31,19 @@ pipeline {
           sh 'docker build -t backend-store-image -f docker/Dockerfile .'
         }      
 
+        //Backend Reviews
+        dir ('persistent-microservices/backend-reviews/') {
+          sh 'npm install'
+          sh 'npm run build'
+          sh 'docker build -t backend-reviews-image -f docker/Dockerfile .'
+        }
+
+        //Backend Reviews
+        dir ('persistent-microservices/backend-shipping/') {
+          sh 'npm install'
+          sh 'npm run build'
+          sh 'docker build -t backend-shipping-image -f docker/Dockerfile .'
+        }
 
       }
     }
@@ -38,7 +51,18 @@ pipeline {
     stage("Building Frontends") {
       
       steps {
+        //Frontend catalog
         dir ('frontends/frontend-catalog/') {
+          sh 'npm install'
+          sh 'npm run build'
+        }
+        //Frontend reviews
+        dir ('frontends/frontend-reviews/') {
+          sh 'npm install'
+          sh 'npm run build'
+        }
+        //Frontend store
+        dir ('frontends/frontend-store/') {
           sh 'npm install'
           sh 'npm run build'
         }
