@@ -47,16 +47,19 @@ pipeline {
         dir ('frontends/frontend-catalog/') {
           sh 'npm install'
           sh 'npm run build'
+          sh 'docker build -t frontend-catalog-image -f docker/Dockerfile .'
         }
         //Frontend reviews
         dir ('frontends/frontend-reviews/') {
           sh 'npm install'
           sh 'npm run build'
+          sh 'docker build -t frontend-reviews-image -f docker/Dockerfile .'
         }
         //Frontend store
         dir ('frontends/frontend-store/') {
           sh 'npm install'
           sh 'npm run build'
+          sh 'docker build -t frontend-store-image -f docker/Dockerfile .'
         }
       }
     }
