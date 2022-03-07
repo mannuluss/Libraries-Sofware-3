@@ -9,6 +9,7 @@ pipeline {
 
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    process.env.CI = false
   }
   
   stages {
@@ -38,7 +39,6 @@ pipeline {
     stage("Building Frontends") {
       
       steps {
-        unset CI
         dir ('frontends/frontend-catalog/') {
           sh 'npm install'
           sh 'npm run build'
