@@ -8,7 +8,7 @@ let uri_amqp = `amqp://guest:guest@${process.env.RABBITMQ_HOST}:5672`;
 
 console.log(uri_amqp);
 
-async function ConsumeMenssage(msgjson) {
+async function consumeMessage(msgjson) {
   logger.info("log", msgjson)
 }
 
@@ -27,7 +27,7 @@ async function ConsumeMenssage(msgjson) {
   await channel.assertQueue(queue, { durable: true });
   await channel.consume(queue, async (msg) => {
     console.log('Received messages');
-    await ConsumeMenssage(JSON.parse(msg.content.toString()));
+    await consumeMessage(JSON.parse(msg.content.toString()));
     await channel.ack(msg);//elimina el mensaje de la cola
   },
     {

@@ -4,7 +4,7 @@ FROM node:17.1-alpine3.12
 WORKDIR /usr/src/app
 
 #Define las variables de ambiente
-#ENV MONGODB_HOST=mongodb-reviews
+ENV RABBITMQ_HOST=rabbitmq
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
@@ -19,4 +19,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 3000
-CMD [ "node", "server.js" ]
+CMD [ "node", "consumer.js" ]
