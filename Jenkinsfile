@@ -26,11 +26,21 @@ pipeline {
           
         }
         //Backend Store
-        echo 'Building Store Backend'
         dir ('persistent-microservices/backend-store/') {
           sh 'mvn -Dmaven.test.failure.ignore=true install'
           sh 'docker build -t backend-store-image -f docker/Dockerfile .'
-        }       
+        }      
+
+
+      }
+    }
+
+    stage("Building Frontends") {
+      
+      steps {
+        dir ('frontends/frontend-catalog/') {
+        sh 'npm install'
+        sh 'npm run build'
       }
     }
 
