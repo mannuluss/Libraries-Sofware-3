@@ -36,6 +36,12 @@ pipeline {
         }       
       }
     }
+
+    stage('Push Docker Images') {
+      steps {
+        sh 'docker push chaphe/backend-catalog-image:1.0'
+      }
+    }
     
     stage("test") {
       steps {
