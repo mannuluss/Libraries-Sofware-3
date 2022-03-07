@@ -33,15 +33,11 @@ pipeline {
 
         //Backend Reviews
         dir ('persistent-microservices/backend-reviews/') {
-          sh 'npm install'
-          sh 'npm run build'
           sh 'docker build -t backend-reviews-image -f docker/Dockerfile .'
         }
 
         //Backend Reviews
         dir ('persistent-microservices/backend-shipping/') {
-          sh 'npm install'
-          sh 'npm run build'
           sh 'docker build -t backend-shipping-image -f docker/Dockerfile .'
         }
 
