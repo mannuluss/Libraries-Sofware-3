@@ -12,12 +12,8 @@ pipeline {
   }
   
   stages {
-    stage('Login Dockerhub') {
-      steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-      }
-    }
-    stage("build backends") {
+
+    stage("build persistent backends") {
       steps {
         // Backend Catalog
         dir ('persistent-microservices/backend-catalog/') {
@@ -44,7 +40,7 @@ pipeline {
       }
     }
 
-    stage("Building Frontends") {
+    stage("Build Frontends") {
       
       steps {
         //Frontend catalog
@@ -67,25 +63,26 @@ pipeline {
 
     stage('Push Docker Images') {
       steps {
+        // Login into dockerhub
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        // Pushing backend images
         sh 'docker tag backend-catalog-image chaphe/backend-catalog-image:1.0'
         sh 'docker push chaphe/backend-catalog-image:1.0'
+        sh 'docker tag backend-reviews-image chaphe/backend-reviews-image:1.0'
+        sh 'docker push chaphe/backend-reviews-image:1.0'
         sh 'docker tag backend-store-image chaphe/backend-store-image:1.0'
         sh 'docker push chaphe/backend-store-image:1.0'
+        sh 'docker tag backend-shipping-image chaphe/backend-shipping-image:1.0'
+        sh 'docker push chaphe/backend-shipping-image:1.0'
+        // Pushing frontends images
+        sh 'docker tag frontend-catalog-image chaphe/frontend-catalog-image:1.0'
+        sh 'docker push chaphe/frontend-catalog-image:1.0'
+        sh 'docker tag frontend-reviews-image chaphe/frontend-reviews-image:1.0'
+        sh 'docker push chaphe/frontend-reviews-image:1.0'
+        sh 'docker tag frontend-store-image chaphe/frontend-store-image:1.0'
+        sh 'docker push chaphe/frontend-store-image:1.0'
       }
     }
     
-    stage("test") {
-      steps {
-        echo 'This is the test phase'
-        echo 'The test phase has been done rigth!'
-      }
-    }
-    
-    stage("deploy") {
-      steps {
-        echo 'This is the deploy phase'
-        echo 'The deploy phase has been done rigth!'
-      }
-    }
   }
 }
