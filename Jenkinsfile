@@ -38,6 +38,7 @@ pipeline {
     stage("Building Frontends") {
       
       steps {
+        unset CI
         dir ('frontends/frontend-catalog/') {
           sh 'npm install'
           sh 'npm run build'
