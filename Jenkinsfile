@@ -39,8 +39,9 @@ pipeline {
       
       steps {
         dir ('frontends/frontend-catalog/') {
-        sh 'npm install'
-        sh 'npm run build'
+          sh 'npm install'
+          sh 'npm run build'
+        }
       }
     }
 
