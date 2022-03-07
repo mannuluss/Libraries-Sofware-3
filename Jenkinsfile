@@ -9,7 +9,6 @@ pipeline {
 
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-    process.env.CI = 'false'
   }
   
   stages {
