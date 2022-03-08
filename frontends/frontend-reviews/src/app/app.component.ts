@@ -15,7 +15,8 @@ interface Review {
 })
 
 export class AppComponent {
-  host = "http://localhost:3000"//direccion del servidor
+  //host = "http://localhost:3000"//direccion del servidor
+  host = "http://164.92.73.70:3000"//direccion del servidor
   title = 'frontend-review';
   lista: Review[] = []
 
