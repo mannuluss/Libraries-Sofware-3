@@ -40,7 +40,7 @@ pipeline {
       }
     }
 
-/*
+
     stage("Build Frontends") {
       
       steps {
@@ -87,17 +87,19 @@ pipeline {
         sh 'docker push chaphe/frontend-store-image:1.0'
       }
     }
-*/
+
+    /*
     stage ('Deploy') {
-    steps{
+      steps{
         sshagent(credentials : ['do-docker-server-credentials']) {
             //sh 'ssh -o StrictHostKeyChecking=no root@hostname.com uptime'
             //sh 'ssh -v user@hostname.com'
             sh 'ssh -o StrictHostKeyChecking=no root@164.92.73.70 docker ps'
             //sh 'scp ./source/filename user@hostname.com:/remotehost/target'
         }
+      }
     }
-}
+*/
     
   }
 }

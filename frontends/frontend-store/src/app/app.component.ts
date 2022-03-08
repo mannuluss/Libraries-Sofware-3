@@ -22,9 +22,14 @@ interface CartDataAngular { libro: library, cant: number }
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  /*
   hostreviews = "http://localhost:3000"//direccion del servidor de review (Express)
   hostlibros = "http://localhost:8081"//direccion del servidor de libros (spring)
   hoststore = "http://localhost:8082"//direccion del servidor de la tienda (spring)
+*/
+  hostreviews = "http://164.92.73.70:3000"//direccion del servidor de review (Express)
+  hostlibros = "http://164.92.73.70:8081"//direccion del servidor de libros (spring)
+  hoststore = "http://164.92.73.70:8082"//direccion del servidor de la tienda (spring)
 
   libros: library[] = [];
   reviews: Review[] = [];

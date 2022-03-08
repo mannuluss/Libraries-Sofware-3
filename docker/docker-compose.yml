@@ -131,7 +131,7 @@ services:
   # Shipping Service
   backend-shipping:
     container_name: backend-shipping
-    image: backend-shipping-image
+    image: 'backend-shipping-image'
     ports:
       - "3001:3000"
     depends_on:
