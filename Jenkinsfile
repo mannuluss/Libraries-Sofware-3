@@ -40,6 +40,7 @@ pipeline {
       }
     }
 
+/*
     stage("Build Frontends") {
       
       steps {
@@ -86,7 +87,7 @@ pipeline {
         sh 'docker push chaphe/frontend-store-image:1.0'
       }
     }
-
+*/
     stage ('Deploy') {
     steps{
         sshagent(credentials : ['do-docker-server-credentials']) {
