@@ -12,16 +12,39 @@ pipeline {
   }
 
   parameters {
-    booleanParam(name: 'Build_Backends', defaultValue: true )
+    booleanParam(name: 'Build_Simple_Backends', defaultValue: true )
+    booleanParam(name: 'Build_Persitent_Backends', defaultValue: true )
     booleanParam(name: 'Build_Frontends', defaultValue: true )
   }
   
   stages {
 
+    stage("Build Simple backends") {
+      when {
+        expression {
+          params.Build_Simple_Backends == true
+        }
+      }
+      steps {
+        // Backend Catalog
+        dir ('simple-microservices/backend-catalog/') {
+          sh 'mvn -Dmaven.test.failure.ignore=true install'
+          sh 'docker build -t backend-catalog-image -f docker/Dockerfile .'
+          
+        }
+
+        //Backend Reviews
+        dir ('simple-microservices/backend-reviews/') {
+          sh 'docker build -t backend-reviews-image -f docker/Dockerfile .'
+        }
+
+      }
+    }
+
     stage("Build persistent backends") {
       when {
         expression {
-          params.Build_Backends == true
+          params.Build_Persitent_Backends == true
         }
       }
       steps {
