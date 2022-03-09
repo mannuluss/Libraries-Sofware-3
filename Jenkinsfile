@@ -10,10 +10,19 @@ pipeline {
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
   }
+
+  parameters {
+    booleanParam(name: 'Build_Backends', defaultValue: true )
+  }
   
   stages {
 
     stage("Build persistent backends") {
+      when {
+        expression {
+          params.Build_Backends == true
+        }
+      }
       steps {
         // Backend Catalog
         dir ('persistent-microservices/backend-catalog/') {
@@ -44,6 +53,7 @@ pipeline {
     stage("Build Frontends") {
       
       steps {
+        /*
         //Frontend catalog
         dir ('frontends/frontend-catalog/') {
           sh 'npm install'
@@ -56,10 +66,9 @@ pipeline {
           sh 'npm run build'
           sh 'docker build -t frontend-reviews-image -f docker/Dockerfile .'
         }
+        */
         //Frontend store
         dir ('frontends/frontend-store/') {
-          sh 'npm install'
-          sh 'npm run build'
           sh 'docker build -t frontend-store-image -f docker/Dockerfile .'
         }
       }
