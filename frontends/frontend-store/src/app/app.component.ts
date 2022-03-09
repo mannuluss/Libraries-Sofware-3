@@ -1,6 +1,7 @@
 import { Component, EventEmitter } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { MatSelectChange } from '@angular/material/select';
+import { environment } from './../environments/environment';
 
 export interface Review {
   usuario: string,
@@ -27,9 +28,10 @@ export class AppComponent {
   hostlibros = "http://localhost:8081"//direccion del servidor de libros (spring)
   hoststore = "http://localhost:8082"//direccion del servidor de la tienda (spring)
 */
-  hostreviews = "http://164.92.73.70:3000"//direccion del servidor de review (Express)
-  hostlibros = "http://164.92.73.70:8081"//direccion del servidor de libros (spring)
-  hoststore = "http://164.92.73.70:8082"//direccion del servidor de la tienda (spring)
+  hostreviews = environment.reviewsUrl; //direccion del servidor de review (Express)
+  hostlibros = environment.catalogUrl; //direccion del servidor de libros (spring)
+  hoststore = environment.storeUrl; //direccion del servidor de la tienda (spring)
+
 
   libros: library[] = [];
   reviews: Review[] = [];
@@ -59,7 +61,7 @@ export class AppComponent {
   GetMeanStars(isbn: string) {
     var mean = 0;
     var lista = this.reviews.filter(value => value.isbn == isbn)
-    lista.forEach(element => {
+    lista.forEach(element => { 
       mean += element.estrellas;
     })
     if (lista.length != 0)

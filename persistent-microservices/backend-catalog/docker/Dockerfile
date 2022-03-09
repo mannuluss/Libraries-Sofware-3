@@ -1,6 +1,11 @@
 #FROM openjdk:8-alpine
 # Imagen de base openjdk 11, en caso de usar java 8 mirar la primera linea
 FROM openjdk:11
+#Define las variables de ambiente
+ENV MYSQL_DB_HOST=mysql-library
+ENV MYSQL_DB_PORT=3306
+ENV MYSQL_DB_USERNAME=root
+ENV MYSQL_DB_PASSWORD=password
 # Copia el jar ejecutable
 COPY target/backend-catalog-library-0.0.1-SNAPSHOT.jar /usr/share/app.jar
 # Lanza el ejecutable usando java 
