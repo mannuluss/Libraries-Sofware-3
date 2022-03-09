@@ -66,11 +66,14 @@ pipeline {
           sh 'npm run build'
           sh 'docker build -t frontend-reviews-image -f docker/Dockerfile .'
         }
-        */
+        
         //Frontend store
         dir ('frontends/frontend-store/') {
           sh 'docker build -t frontend-store-image -f docker/Dockerfile .'
         }
+
+        */
+
       }
     }
 
@@ -88,10 +91,12 @@ pipeline {
         sh 'docker tag backend-shipping-image chaphe/backend-shipping-image:1.0'
         sh 'docker push chaphe/backend-shipping-image:1.0'
         // Pushing frontends images
+        /*
         sh 'docker tag frontend-catalog-image chaphe/frontend-catalog-image:1.0'
         sh 'docker push chaphe/frontend-catalog-image:1.0'
         sh 'docker tag frontend-reviews-image chaphe/frontend-reviews-image:1.0'
         sh 'docker push chaphe/frontend-reviews-image:1.0'
+        */
         sh 'docker tag frontend-store-image chaphe/frontend-store-image:1.0'
         sh 'docker push chaphe/frontend-store-image:1.0'
       }
