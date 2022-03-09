@@ -12,7 +12,8 @@ pipeline {
   }
 
   parameters {
-    booleanParam(name: 'Build_Backends', defaultValue: true )
+    booleanParam(name: 'Build_Backends', defaultValue: true ),
+    booleanParam(name: 'Build_Frontends', defaultValue: true )
   }
   
   stages {
@@ -51,7 +52,12 @@ pipeline {
 
 
     stage("Build Frontends") {
-      
+      when {
+        expression {
+          params.Build_Frontends == true
+        }
+      }
+
       steps {
         
         //Frontend catalog
