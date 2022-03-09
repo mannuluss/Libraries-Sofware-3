@@ -1,11 +1,11 @@
-FROM node:17.1-alpine3.12
+FROM node:16-alpine
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 # Create app directory
 WORKDIR /home/node/app
 
 #Define las variables de ambiente
-ENV RABBITMQ_HOST=rabbitmq
+ENV MONGODB_HOST=localhost
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
@@ -22,4 +22,4 @@ RUN npm install
 COPY --chown=node:node . .
 
 EXPOSE 3000
-CMD [ "node", "consumer.js" ]
+CMD [ "node", "server.js" ]

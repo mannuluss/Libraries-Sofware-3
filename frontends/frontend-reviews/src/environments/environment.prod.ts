@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  reviewsUrl:
+    window['env']['reviewsUrl'] || 'http://localhost:8082'
 };

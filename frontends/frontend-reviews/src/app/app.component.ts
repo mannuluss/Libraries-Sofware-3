@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { environment } from './../environments/environment';
 
 interface Review {
   usuario: string,
@@ -16,7 +17,7 @@ interface Review {
 
 export class AppComponent {
   //host = "http://localhost:3000"//direccion del servidor
-  host = "http://164.92.73.70:3000"//direccion del servidor
+  host = environment.reviewsUrl;//direccion del servidor
   title = 'frontend-review';
   lista: Review[] = []
 
