@@ -29,13 +29,13 @@ pipeline {
         // Backend Catalog
         dir ('simple-microservices/backend-catalog/') {
           sh 'mvn -Dmaven.test.failure.ignore=true install'
-          sh 'docker build -t backend-catalog-image -f docker/Dockerfile .'
+          sh 'docker build -t backend-catalog-image:simple -f docker/Dockerfile .'
           
         }
 
         //Backend Reviews
         dir ('simple-microservices/backend-reviews/') {
-          sh 'docker build -t backend-reviews-image -f docker/Dockerfile .'
+          sh 'docker build -t backend-reviews-image:simple -f docker/Dockerfile .'
         }
 
       }
@@ -103,7 +103,8 @@ pipeline {
     stage('Push Docker Images') {
       steps {
         // Login into dockerhub
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        //sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
         // Pushing backend images
         sh 'docker tag backend-catalog-image chaphe/backend-catalog-image:1.0'
         sh 'docker push chaphe/backend-catalog-image:1.0'
